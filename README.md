@@ -10,9 +10,9 @@ the device works, but there is no support and not contact with them on the disco
 Therefore, I have scratched the itch and started to reverse-engineer the monument database on the disk (a standard
 SQL lite database) in order to be able to export my 30000+ photos and videos from the device with their structure.
 
-**The last point is the most important. The standard "export" feature of Monument DOES NOT include the albums. Only raw
+The last point is the most important. The standard "export" feature of Monument DOES NOT include the albums. Only raw
 files are exported - in folders "per camera", which makes this feature absolutely useless in my use case (many users,
-many custom folders, many albums).**
+many custom folders, many albums).
 
 If you find it useful, drop me a line. If you see something wrong or are unable to use it, also contact me - I am available
 in the monument discord.
@@ -28,9 +28,10 @@ This script is meant for the M2 owners that want to export their photos from the
 - Photos without album are copied to "PHOTOS_WITHOUT_ALBUM" folder for each user separately
 - The deleted files are not exported
 - The faces database is not exported (it does not work very well anyway)
+- Photos in "incoming" folder are copied to the appropriate user folder, with no album
 
-Important: the script does NOT currently manage the edited photos when the M2 stores the exif metadata in the database. 
-I do not have many of such files. If anyone is interested in the feature, let me know, I can add it.
+**Important: the script does NOT currently manage the edited photos when the M2 stores the exif metadata in the database. 
+I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it.**
 
 Usage:
 java Main \<source directory\> \<destination directory\> --dry-run
