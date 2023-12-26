@@ -26,9 +26,10 @@ This script is meant for the M2 owners that want to export their photos from the
 - Moving the photos to the appropriate albums
 - Correctly handling the shared folders/albums edge cases (example: folder of user A, inside an album of user B and inside a photo from user C)
 - Photos without album are copied to "PHOTOS_WITHOUT_ALBUM" folder for each user separately
+- Photos in "incoming" folder are copied to the appropriate user folder, with no album
 - The deleted files are not exported
 - The faces database is not exported (it does not work very well anyway)
-- Photos in "incoming" folder are copied to the appropriate user folder, with no album
+- The structure of cameras is not exported (personally, I do not care about it at all)
 
 **Important: the script does NOT currently manage the edited photos when the M2 stores the exif metadata in the database. 
 I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it.**
