@@ -24,17 +24,28 @@ This script is meant for the M2 owners that want to export their photos from the
 
 - Keeping the folder and album structure for all users
 - Moving the photos to the appropriate albums
-- Correctly handling the shared folders/albums edge cases (example: folder of user A, inside an album of user B and inside a photo from user C)
+- Correctly handling the shared folders/albums edge cases (see below)
 - Photos without album are copied to "PHOTOS_WITHOUT_ALBUM" folder for each user separately
 - Photos in "incoming" folder are copied to the appropriate user folder, with no album
 - The deleted files are not exported
 - The faces database is not exported (it does not work very well anyway)
 - The structure of cameras is not exported (personally, I do not care about it at all)
 
-**Important: the script does NOT currently manage the edited photos when the M2 stores the exif metadata in the database. 
-I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it.**
+## Important
 
-Usage:
+The exported structure is folder and album based. This solves the following situation:
+
+- User A creates a folder and shares with other users
+- User B creates an album inside the shared folder from user A
+- User C places a photo inside the shared album of the user B
+
+=> the script will export the photo inside the structure of user "A". This corresponds to my use case and 
+hopefully also to yours.
+
+Important: the script does NOT currently manage the edited photos when the M2 stores the exif metadata in the database. 
+I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it
+
+## Usage
 java Main \<source directory\> \<destination directory\> --dry-run
 
 Source directory must point to the monument root folder (containing "monument" and "Other Files" folders).
