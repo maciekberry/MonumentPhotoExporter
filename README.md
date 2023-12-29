@@ -46,6 +46,13 @@ Important: the script does NOT currently manage the edited photos when the M2 st
 I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it
 
 ## Usage
+
+The script is local based: you must take the disk out of your monument and connect it to your computer before launching.
+
+It was tested on Linux Mint 21.
+
+Command line:
+
 java -jar MonumentPhotoExporter-0.1.jar \<source directory\> \<destination directory\> --dry-run
 
 Source directory must point to the monument root folder (containing "monument" and "Other Files" folders).
@@ -64,7 +71,7 @@ I am pretty sure I understand most of the features, but there are things that le
 what the hell is the format of the data in "ContentEdit>edits" column?)
 
 The export script is based on the internal Monument database (a file in SQLite format, in ".userdata" folder). Therefore, 
-it only copies the files recorded in the database. In the author's database, the following things were observed:
+it only copies the files recorded in the database. In my database, the following things were observed:
 
 - In most of the cases, for HEIC files, monument also creates an extracted "MOV" file. The mov file is not exported.
 - Very rarely (several cases in my 30k+ database), there are files not recorded in the database. After manual inspection, 
