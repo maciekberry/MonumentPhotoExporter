@@ -75,7 +75,12 @@ public class Exporter {
             Files.createFile(destPath);
         }
         else {
-            Files.copy(Path.of(from), destPath);
+            try {
+                Files.copy(Path.of(from), destPath);
+            }
+            catch (java.nio.file.NoSuchFileException e) {
+                System.out.println("ERROR: " + from + " -> FILE DOES NOT EXIST IN MONUMENT DISK. WE CONTINUE ANYWAY");
+            }
         }
 
     }
