@@ -46,7 +46,7 @@ Important: the script does NOT currently manage the edited photos when the M2 st
 I do not have many of such files. If anyone is interested in the feature, let me know, I can try to add it
 
 ## Usage
-java Main \<source directory\> \<destination directory\> --dry-run
+java -jar MonumentPhotoExporter-0.1.jar \<source directory\> \<destination directory\> --dry-run
 
 Source directory must point to the monument root folder (containing "monument" and "Other Files" folders).
 Destination directory must exists. The program does not verify the amount of space available on the export storage.
@@ -56,4 +56,26 @@ Use the --dry-run optional option before you do the actual export for checking t
 
 The script DOES NOT modify anything on the monument drive - the database is opened in read-only mode and files are only
 read. Nothing is written to the drive.
+
+## How does it work? Caveats
+
+Please note that the entire behaviour is based on my reverse-engineering, I have not got any access to any documentation.
+I am pretty sure I understand most of the features, but there are things that let me stumbled, indeed (for example,
+what the hell is the format of the data in "ContentEdit>edits" column?)
+
+The export script is based on the internal Monument database (a file in SQLite format, in ".userdata" folder). Therefore, 
+it only copies the files recorded in the database. In the author's database, the following things were observed:
+
+- In most of the cases, for HEIC files, monument also creates an extracted "MOV" file. The mov file is not exported.
+- Very rarely (several cases in my 30k+ database), there are files not recorded in the database. After manual inspection, 
+they were actual photos but not interesting ones, so I suspect, these were deleted and monument did not delete the files.
+- In some cases, monument stores an edited photo next to the original one with a slightly modified name (prefix "edit" or "1").
+Because I have only very few files edited that way, I have decided to only copy the original. 
+- During the tests, I encountered once a situation when a file from the database did not exist in the disk. I was
+unable to reproduce it, so the script ignores such a situation with an appropriate message.
+
+## Future
+
+If anyone finds this interesting, I will be very happy :) If you have any non-managed situation in your monument database,
+let me know, I can work on it.
 
