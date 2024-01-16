@@ -113,8 +113,24 @@ public class Exporter {
 
 
         if (is_empty) {
+
+            sql = "SELECT taken FROM content WHERE id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,content_id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            boolean.is_empty = !(rs.next());
+            String datetime = rs.getString("taken");
+            rs.close();
+            pstmt.close();
+
+            String year = datetime.substring(0,3);
+            String month = datetime.substring(5,6);
+            String day = datetime.substring(8,9);
+            
             //special case: the content not in an album
-            result.dest = monumentUsers.get(content_owner) + "/PHOTOS_WITHOUT_ALBUM/";
+            result.dest = monumentUsers.get(content_owner) + "/PHOTOS_WITHOUT_ALBUM/" + year + "/" + month + "/" + day + "/";
             result.owner_changed = false;
             return result;
         }
