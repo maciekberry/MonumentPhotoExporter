@@ -118,18 +118,30 @@ public class Exporter {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,content_id);
 
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
-            boolean.is_empty = !(rs.next());
+            is_empty = !(rs.next());
             String datetime = rs.getString("taken");
             rs.close();
             pstmt.close();
 
-            String year = datetime.substring(0,3);
-            String month = datetime.substring(5,6);
-            String day = datetime.substring(8,9);
-            
+            String year, month, day;
+            if (datetime != null && datetime.length() > 10) {
+                year = datetime.substring(0,4);
+                month = datetime.substring(6,7);
+                day = datetime.substring(9,10);
+            } else {
+                year = "1970";
+                month = "01";
+                day = "01";
+            }
+
             //special case: the content not in an album
+            if (is_empty) {
+                year = "1970";
+                month = "01";
+                day = "01";
+            }
             result.dest = monumentUsers.get(content_owner) + "/PHOTOS_WITHOUT_ALBUM/" + year + "/" + month + "/" + day + "/";
             result.owner_changed = false;
             return result;
