@@ -3,6 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,9 +132,11 @@ public class Exporter {
 
             String year, month, day;
             if (datetime != null && datetime.length() > 10) {
-                year = datetime.substring(0,4);
-                month = datetime.substring(6,7);
-                day = datetime.substring(9,10);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(datetime, formatter);
+                year = date.getYear() + "";
+                month = date.getMonthValue() + "";
+                day = date.getDayOfMonth() + "";
             } else {
                 year = "1970";
                 month = "01";
