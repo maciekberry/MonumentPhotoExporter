@@ -3,6 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,8 +118,38 @@ public class Exporter {
 
 
         if (is_empty) {
+
+            sql = "SELECT taken FROM content WHERE id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,content_id);
+
+            rs = pstmt.executeQuery();
+
+            is_empty = !(rs.next());
+            String datetime = rs.getString("taken");
+            rs.close();
+            pstmt.close();
+
+            String year, month, day;
+            if (datetime != null && datetime.length() > 10) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(datetime, formatter);
+                year = date.getYear() + "";
+                month = date.getMonthValue() + "";
+                day = date.getDayOfMonth() + "";
+            } else {
+                year = "1970";
+                month = "01";
+                day = "01";
+            }
+
             //special case: the content not in an album
-            result.dest = monumentUsers.get(content_owner) + "/PHOTOS_WITHOUT_ALBUM/";
+            if (is_empty) {
+                year = "1970";
+                month = "01";
+                day = "01";
+            }
+            result.dest = monumentUsers.get(content_owner) + "/PHOTOS_WITHOUT_ALBUM/" + year + "/" + month + "/" + day + "/";
             result.owner_changed = false;
             return result;
         }
