@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>MonumentPhotoExporter</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
