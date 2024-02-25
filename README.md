@@ -1,5 +1,16 @@
 # MonumentPhotoExporter
 
+## Change log 0.2
+
+I am publishing the v0.2 with following changes:
+
+- The "PHOTOS_WITHOUT_ALBUM" photos are now organized into subfolders (year/month/date). This solves the problem 
+  of duplicate file names (thanks @goeland86!)
+- The readme file has been updated :)
+
+
+## About
+
 A script for exporting all photos from a Monument M2 device (www.getmonument.com).
 
 ## Why?
