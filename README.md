@@ -70,6 +70,12 @@ Source directory must point to the monument root folder (containing "monument" a
 Destination directory must exists. The program does not verify the amount of space available on the export storage.
 Use the --dry-run optional option before you do the actual export for checking the output.
 
+On windows 11 and jdk 17.0.7 rebuild the project:
+javac -cp lib\sqlite-jdbc-3.43.0.0.jar -d bin src\main\java\*.java
+
+And run:
+java -cp bin;lib\sqlite-jdbc-3.43.0.0.jar Main \<source directory\> \<destination directory\> --dry-run
+
 ## Is it safe?
 
 The script DOES NOT modify anything on the monument drive - the database is opened in read-only mode and files are only
