@@ -1,5 +1,19 @@
 # MonumentPhotoExporter
 
+
+## Change log 0.3
+
+I am publishing the v0.3 which is strictly identical to v0.2,
+because the previous build was not correct (missing Main class).
+
+If you had this error:
+
+Error: Could not find or load main class Main
+Caused by: java.lang.ClassNotFoundException: Main
+
+You should use the v0.3, please
+
+
 ## Change log 0.2
 
 I am publishing the v0.2 with following changes:
@@ -64,7 +78,7 @@ It was tested on Linux Mint 21.
 
 Command line:
 
-java -jar MonumentPhotoExporter-0.1.jar \<source directory\> \<destination directory\> --dry-run
+java -jar MonumentPhotoExporter-0.3.jar \<source directory\> \<destination directory\> --dry-run
 
 Source directory must point to the monument root folder (containing "monument" and "Other Files" folders).
 Destination directory must exists. The program does not verify the amount of space available on the export storage.
