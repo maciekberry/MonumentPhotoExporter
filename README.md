@@ -1,6 +1,11 @@
 # Monument Photo Exporter
 
-**Version 0.13** — 2025-11-09
+**Version 0.4** — 2025-12-01
+
+## AUTHORS
+
+- **Maciekberry** - initial version and current maintainer
+- **- Frava735** - the author of all advanced features: nesting, tags export, gps, etc
 
 ---
 
@@ -81,10 +86,6 @@ destination/
 **Monument Photo Exporter** is a Java utility that exports all photos and videos from a **Monument M2** device into an organized folder structure.  
 It preserves albums and users, supports edited images, EXIF metadata (including GPS, captions, and tags), and provides a `--dry-run` simulation mode for safe operation.
 
-## AUTHORS
-
-- **Maciekberry** - initial version and current maintainer
-**- Frava735** - the author of all advanced features: nesting, tags export, gps, etc  
 
 
 ## WHY
