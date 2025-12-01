@@ -5,7 +5,7 @@
 ## AUTHORS
 
 - **Maciekberry** - initial version and current maintainer
-- **- Frava735** - the author of all advanced features: nesting, tags export, gps, etc
+- **Frava735** - the author of all advanced features: nesting, tags export, gps, etc
 
 ---
 
