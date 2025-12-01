@@ -544,8 +544,9 @@ public class Exporter {
 
                 // Flatten mode - single level
                 if (args.flatten) {
+                    String folderPath = buildFolderPath(folder_id, true);
                     String sanitizedAlbumName = sanitizeAlbumName(album_name);
-                    result.dest = monumentUsers.get(album_owner_id) + "/" + sanitizedAlbumName;
+                    result.dest = folderPath + sanitizedAlbumName;
                     result.albumName = album_name;
                     result.owner_changed = (album_owner_id != content_owner);
                     result.new_owner = album_owner_id;
@@ -563,7 +564,7 @@ public class Exporter {
                 }
 
                 // Album in folder hierarchy
-                String folderPath = buildFolderPath(folder_id);
+                String folderPath = buildFolderPath(folder_id, false);
                 String sanitizedAlbumName = sanitizeAlbumName(album_name);
                 result.dest = folderPath + "/" + sanitizedAlbumName;
                 result.albumName = album_name;
@@ -626,7 +627,10 @@ public class Exporter {
      * @param folder_id Starting folder ID
      * @return Full path including username
      */
-    private String buildFolderPath(int folder_id) throws SQLException {
+    private String buildFolderPath(int folder_id, boolean flatten) throws SQLException {
+
+        String separator = (flatten? " - ": "/");
+
         String sql = 
             "WITH RECURSIVE cte_AlbumFolder (id, name, parent_id, user_id) AS ( " +
             "    SELECT e.id, e.name, e.parent_id, e.user_id " +
@@ -647,11 +651,12 @@ public class Exporter {
                 int user_id = 0;
                 
                 while (rs.next()) {
-                    path.insert(0, "/");
+                    path.insert(0, separator);
                     path.insert(0, sanitizeAlbumName(rs.getString("name")));
                     user_id = rs.getInt("user_id");
                 }
-                
+
+                //we always insert / because it separates the owner from the path
                 path.insert(0, "/").insert(0, monumentUsers.get(user_id));
                 return path.toString();
             }
@@ -1464,7 +1469,7 @@ public class Exporter {
 
         String monumentRoot = args.sourceDir + "/";
         String sql = "SELECT id, user_id, type, path, filename, checksum, caption, geo_lat, geo_lon, taken_at FROM Content where deleted_at is null";
-
+// and filename = 'Parter-Kuchnia-kafle.png'
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
