@@ -88,7 +88,7 @@ public class Main {
             runArgs.exportGps = containsArg(args, "--export-gps");
             runArgs.exportTags = containsArg(args, "--export-tags");
             runArgs.tagsAsFolders = containsArg(args, "--tags-as-folders");
-            runArgs.dryrun = containsArg(args, "--dryrun");
+            runArgs.dryrun = containsArg(args, "--dry-run");
             
         } catch (Exception e) {
             System.err.println("ERROR: Failed to parse arguments: " + e.getMessage());
