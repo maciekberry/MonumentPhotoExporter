@@ -84,27 +84,27 @@ This exporter allows users to **recover their complete photo libraries** directl
 ### Basic export
 
 ```bash
-java -jar MonumentPhotoExporter-0.13.jar --source /media/monument --dest /export/photos
+java -jar MonumentPhotoExporter-0.4.jar --source /media/monument --dest /export/photos
 ```
 
 ### Export with all options
 
 ```bash
-java -jar MonumentPhotoExporter-0.13.jar --source /media/monument --dest /export/photos \
+java -jar MonumentPhotoExporter-0.4.jar --source /media/monument --dest /export/photos \
   --flatten --save-edits --save-comments --export-gps --export-tags
 ```
 
 ### Export with tags as folders
 
 ```bash
-java -jar MonumentPhotoExporter-0.13.jar --source /media/monument --dest /export/photos \
+java -jar MonumentPhotoExporter-0.4.jar --source /media/monument --dest /export/photos \
   --tags-as-folders --save-comments --export-gps --export-tags
 ```
 
 ### Dry-run simulation
 
 ```bash
-java -jar MonumentPhotoExporter-0.13.jar --source /media/monument --dest /export/photos \
+java -jar MonumentPhotoExporter-0.4.jar --source /media/monument --dest /export/photos \
   --dry-run --flatten --export-tags
 ```
 
@@ -196,7 +196,7 @@ GPS (separate EXIF fields):
   Longitude: 2.294481 E
 ```
 
-### Smart Truncation (v0.13)
+### Smart Truncation
 
 **GPS is ALWAYS written** (separate EXIF fields, not affected by size limits).
 
