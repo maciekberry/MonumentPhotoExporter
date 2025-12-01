@@ -415,7 +415,7 @@ The tool logs warnings for:
 ## AUTHOR & DISCLAIMER
 
 **Originally created by** [Maciekberry](https://github.com/maciekberry/MonumentPhotoExporter)  
-**Enhanced by** Frava735 (v0.4)
+**Enhanced by** [Frava735](https://github.com/Frava735) (v0.4)
 
 **Disclaimer**: Use at your own risk. There are **no guarantees** regarding the correctness or safety of the export.  
 It is **strongly recommended** to test the tool on a small subset of your data first before performing a full export.
