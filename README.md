@@ -37,43 +37,6 @@ java -jar MonumentPhotoExporter-0.4.jar --source <source_dir> --dest <destinatio
 | `--tags-as-folders` | Create tag folders with photo copies                                                                             |
 | `--help` | Show help message                                                                                                |
 
-### Output Structure
-
-**Without `--flatten`** (original nested folders):
-
-```
-destination/
-  ├─ user_name_id/
-  │  ├─ FolderName/
-  │  │  ├─ album1/
-  │  │  │  ├─ photo.jpg
-  │  │  │  └─ photo_edited.jpg
-```
-
-**With `--flatten`** (user/album only):
-
-```
-destination/
-  ├─ user_name_id/
-  │  ├─ FolderName - album1/
-  │  │  ├─ photo.jpg
-  │  │  └─ photo_edited.jpg
-```
-
-**With `--tags-as-folders`**:
-
-```
-destination/
-  ├─ user_name_id/
-  │  ├─ album1/
-  │  │  └─ photo.jpg (with all tags in EXIF)
-  │  └─ tags/
-  │     ├─ Tag_vacation/
-  │     │  └─ photo.jpg (copy with ALL tags in EXIF)
-  │     └─ Tag_paris/
-  │        └─ photo.jpg (copy with ALL tags in EXIF)
-```
-
 ### ⚠️ Warnings
 
 - **Disk space is not checked**; the tool will stop after filling the space
@@ -116,35 +79,7 @@ This exporter allows users to **recover their complete photo libraries** directl
 
 ---
 
-## USAGE
-
-```bash
-java -jar MonumentPhotoExporter-0.13.jar --source <source_dir> --dest <destination_dir> [options]
-```
-
-### Arguments
-
-| Argument | Description |
-|----------|-------------|
-| `--source <path>` | Path to Monument disk (must contain `monument/.userdata/m.sqlite3`) |
-| `--dest <path>` | Path to the export destination directory (created if doesn't exist) |
-
-### Options
-
-| Option | Description |
-|--------|-------------|
-| `--dry-run` | Simulate export without copying files |
-| `--flatten` | Flatten all nested folders under the album level |
-| `--save-edits` | Export edited images with metadata and `_edited` suffix |
-| `--save-comments` | Save Monument captions to EXIF `ImageDescription` (auto-truncated if needed) |
-| `--export-gps` | Export GPS coordinates to EXIF (always written, never skipped) |
-| `--export-tags` | Export Monument tags to EXIF Keywords in standardized format (auto-truncated if needed) |
-| `--tags-as-folders` | Create separate tag folders with photo copies (all tags included) |
-| `--help` | Show help message and usage examples |
-
----
-
-## EXAMPLES
+## USAGE EXAMPLES
 
 ### Basic export
 
@@ -196,7 +131,7 @@ destination/
 ```
 destination/
   ├─ user_name_id/
-  │  ├─ album1/
+  │  ├─ FolderName - album1/
   │  │  ├─ photo.jpg
   │  │  └─ photo_edited.jpg
   │  └─ PHOTOS_WITHOUT_ALBUM/
@@ -226,8 +161,6 @@ destination/
 
 ## EXIF METADATA FORMAT
 
-### Tags Format (v0.12+) - STANDARDIZED
-
 Tags are now written in **industry-standard format** for maximum compatibility:
 
 ```
@@ -238,14 +171,7 @@ This was taken during our summer vacation.
 Keywords: paris, vacation, sunset, eiffel-tower, 2024
 ```
 
-**Old format (v0.11 and earlier):**
-```
-[Tags: paris;vacation;sunset;eiffel-tower;2024]
-```
-
-### Why the Change?
-
-The new `Keywords:` format is **universally recognized** by:
+The `Keywords:` format is **universally recognized** by:
 - ✅ **Samsung Gallery** (Android)
 - ✅ **Google Photos**
 - ✅ **Immich** (auto-parsing)
@@ -380,8 +306,6 @@ All timestamps are preserved across all export modes.
 
 ## STATISTICS AND REPORTING
 
-### Export Summary (v0.13+)
-
 At completion, displays comprehensive statistics with **separate counters**:
 
 ```
@@ -425,7 +349,7 @@ SUCCESS: Export completed
 ================================================
 ```
 
-### Detailed Logging (v0.13+)
+### Detailed Logging 
 
 Each file export shows **DB entry count vs physical files**:
 
@@ -457,94 +381,6 @@ The tool logs warnings for:
 - Temporary file cleanup
 
 ---
-
-## RELEASE HISTORY (v0.4 → v0.13)
-
-### v0.13 (2025-11-09) — *(Frava735)*
-
-- 🔧 **CRITICAL FIX**: GPS **always written** (separate EXIF fields, not affected by APP1 limit)
-- 📏 **Smart truncation**: Progressive truncation of captions and tags to fit EXIF limits (60KB max)
-- 🎯 **Strategy**: GPS (always) → Captions (truncated if needed) → Tags (truncated or skipped if needed)
-- 🐛 **Fixed**: `Ljava.lang.String@xxxxx` bug in EXIF ImageDescription
-- 🧹 **Fixed**: Automatic cleanup of orphaned .tmp files on EXIF write errors
-- 📊 **Improved statistics**: Separate counters for DB entries vs physical files copied
-- ⚠️ **Better warnings**: Clear messages when EXIF truncated (`attempt N`) or skipped
-- 💾 **EXIF limit**: Maximum 60KB to avoid APP1 segment overflow on Samsung/modern phones
-- 📱 **Tested**: Works with Samsung Galaxy photos with extensive existing EXIF
-
-### v0.12 (2025-11-09) — *(Frava735)*
-
-- 🏷️ **BREAKING CHANGE**: Tags now written as `Keywords: tag1, tag2` instead of `[Tags: tag1;tag2]`
-- ✨ Added `metadata-extractor` dependency for improved metadata support
-- 📱 Vastly improved compatibility with photo applications (Samsung, Apple, Google Photos, Immich, Ente)
-- 🔧 Standardized EXIF format for universal recognition
-- 🏷️ All tags written to photos in tag folders (not just the folder tag)
-- 🆕 New command-line argument format: `--source` and `--dest` instead of positional
-- 📖 Added `--help` option with usage examples
-- ✅ Better error messages and validation
-
-### v0.11 (2025-11-08) — *(Frava735)*
-
-- 🏷️ Added `--tags-as-folders` option to create tag-based folder structure
-- 📁 Photos with tags are copied to `user/tags/Tag_name/` folders
-- 📊 Added top 20 tags statistics in summary
-- ⏱️ Improved timestamp handling: uses `taken_at` from database as fallback
-- 🔧 All file timestamps now properly preserved across all export modes
-- 🐛 Fixed tag folder exports to include all tags per photo
-
-### v0.10 (2025-11-08) — *(Frava735)*
-
-- 🏷️ Added `--export-tags` option to write Monument tags to EXIF
-- 📝 Tags appended to `ImageDescription` in format `[Tags: tag1;tag2;tag3]`
-- 🛡️ Tags sanitized for NTFS compatibility (same rules as album names)
-- 📊 Tag statistics tracked and displayed in summary
-
-### v0.9 (2025-11-07) — *(Frava735)*
-
-- ✨ Enhanced edited images: copy GPS, captions, timestamps, and tag "Monument M2" as camera
-- 📊 Added per-album statistics for edited images
-- 🔧 Fixed caption sanitization for EXIF compatibility (UTF-8 → ASCII)
-- 🛡️ Added robustness for EXIF APP1 segment overflow handling
-
-### v0.8 (2025-11-07) — *(Frava735)*
-
-- 📍 Added `--export-gps` option to write GPS coordinates to EXIF
-- 🔒 Preserves existing GPS data if already present
-
-### v0.7 (2025-11-07) — *(Frava735)*
-
-- 💬 Added `--save-comments` option to export Monument captions to EXIF
-- ➕ Appends captions to existing EXIF descriptions
-
-### v0.6 (2025-11-07) — *(Frava735)*
-
-- 🖼️ Added `--save-edits` option to export edited images
-- ✏️ Edited images receive `_edited` suffix
-- ⏱️ Preserves original timestamps
-
-### v0.5 (2025-11-07) — *(Frava735)*
-
-- 🚨 **Critical fix**: NTFS-safe path sanitization
-- 🧹 Removes trailing dots and forbidden characters (`/ \ : * ? " < > |`)
-
-### v0.4 (2025-11-07) — *(Frava735)*
-
-- 📁 Added `--flatten` option to flatten folder hierarchy
-- 📅 Photos without album are organized by date (`YYYY/MM/DD`)
-
-### v0.3 — *(Maciekberry)*
-
-- 🎉 Initial public version on GitHub
-- 🔧 Fixed missing `Main` class from v0.2 build
-- 📂 Basic export preserving album and date-based folder structure
-
-### v0.2 — *(Maciekberry)*
-
-- 📁 "PHOTOS_WITHOUT_ALBUM" organized into date subfolders (year/month/date)
-- 📖 Readme updated
-
----
-
 ## REQUIREMENTS
 
 - ☕ **Java 17 or newer**
@@ -579,7 +415,7 @@ The tool logs warnings for:
 ## AUTHOR & DISCLAIMER
 
 **Originally created by** [Maciekberry](https://github.com/maciekberry/MonumentPhotoExporter)  
-**Enhanced by** Frava735 (v0.4 → v0.13)
+**Enhanced by** Frava735 (v0.4)
 
 **Disclaimer**: Use at your own risk. There are **no guarantees** regarding the correctness or safety of the export.  
 It is **strongly recommended** to test the tool on a small subset of your data first before performing a full export.
@@ -588,11 +424,5 @@ It is **strongly recommended** to test the tool on a small subset of your data f
 
 ## LICENSE
 
-This software retains the original license from the Maciekberry repository.  
 See the included `LICENSE` file for details.
 
----
-
-## FUTURE
-
-*(Maciekberry)* If anyone finds this interesting, I will be very happy :) If you have any non-managed situation in your Monument database, let me know, I can work on it.
