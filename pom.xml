@@ -7,7 +7,7 @@
 
     <groupId>com.monument</groupId>
     <artifactId>MonumentPhotoExporter</artifactId>
-    <version>0.12</version>
+    <version>0.4</version>
     <packaging>jar</packaging>
 
     <name>Monument Photo Exporter</name>

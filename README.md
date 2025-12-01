@@ -11,26 +11,26 @@ Export all photos from a Monument M2 device with album structure, edits, caption
 ### Command
 
 ```bash
-java -jar MonumentPhotoExporter-0.13.jar --source <source_dir> --dest <destination_dir> [options]
+java -jar MonumentPhotoExporter-0.4.jar --source <source_dir> --dest <destination_dir> [options]
 ```
 
 ### Required
 
 - **`--source <path>`**: Path to Monument disk (`monument/.userdata/m.sqlite3` must exist)
-- **`--dest <path>`**: Destination directory (will be created if doesn't exist)
+- **`--dest <path>`**: Destination directory (will be created if doesn't exist). Be careful to have enough free space.
 
 ### Options
 
-| Option | Description |
-|--------|-------------|
-| `--dry-run` | Simulate export without copying files |
-| `--flatten` | Flatten all nested folders under album level |
-| `--save-edits` | Export edited images (`_edited` suffix) |
-| `--save-comments` | Export Monument captions to EXIF |
-| `--export-gps` | Export GPS coordinates to EXIF (always written, never skipped) |
-| `--export-tags` | Export Monument tags to EXIF Keywords (standardized format) |
-| `--tags-as-folders` | Create tag folders with photo copies |
-| `--help` | Show help message |
+| Option | Description                                                                                                      |
+|--------|------------------------------------------------------------------------------------------------------------------|
+| `--dry-run` | Simulate export without copying files                                                                            |
+| `--flatten` | Flatten all nested folders under album level - the destination folder will be a concatenation of the folder path |
+| `--save-edits` | Export edited images (`_edited` suffix)                                                                          |
+| `--save-comments` | Export Monument captions to EXIF                                                                                 |
+| `--export-gps` | Export GPS coordinates to EXIF (always written, never skipped)                                                   |
+| `--export-tags` | Export Monument tags to EXIF Keywords (standardized format)                                                      |
+| `--tags-as-folders` | Create tag folders with photo copies                                                                             |
+| `--help` | Show help message                                                                                                |
 
 ### Output Structure
 
@@ -50,7 +50,7 @@ destination/
 ```
 destination/
   ├─ user_name_id/
-  │  ├─ album1/
+  │  ├─ FolderName - album1/
   │  │  ├─ photo.jpg
   │  │  └─ photo_edited.jpg
 ```
@@ -71,22 +71,21 @@ destination/
 
 ### ⚠️ Warnings
 
-- **Disk space is not checked**; tool may stop/crash if full
+- **Disk space is not checked**; the tool will stop after filling the space
 - **Read-only operation**: The tool **NEVER modifies** the Monument disk, database, or source files. All writes are **only to the destination directory**.
 - **Test with a small subset first** using `--dry-run`
-- **Use at your own risk** — no guarantees
 
----
 
 ## DESCRIPTION
 
 **Monument Photo Exporter** is a Java utility that exports all photos and videos from a **Monument M2** device into an organized folder structure.  
 It preserves albums and users, supports edited images, EXIF metadata (including GPS, captions, and tags), and provides a `--dry-run` simulation mode for safe operation.
 
-This project builds upon the original utility by **Maciekberry**, which was first published on GitHub when Monument Labs discontinued support for their devices.  
-The current version extends the original functionality while keeping the same spirit and license.
+## AUTHORS
 
----
+- **Maciekberry** - initial version and current maintainer
+**- Frava735** - the author of all advanced features: nesting, tags export, gps, etc  
+
 
 ## WHY
 
